@@ -7,7 +7,7 @@ const ProductList = () => {
     userElements.push(<ShopCard />);
   }
 
-  return <ul>{userElements}</ul>;
+  return <ul className="grid grid-cols-3">{userElements}</ul>;
 };
 
 export default ProductList;
