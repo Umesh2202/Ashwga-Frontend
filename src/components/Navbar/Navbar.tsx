@@ -12,10 +12,10 @@ const Navbar = () => {
         </div>
         <div className="flex justify-around p-2 gap-3 items-center">
           <div>
-            <Button text="Login" css="p-2" />
+            <Button text="Login" css="bg-yellow-500" />
           </div>
           <div>
-            <Button text="Sign Up" css="p-2" />
+            <Button text="Sign Up" css="bg-yellow-500" />
           </div>
         </div>
       </div>
