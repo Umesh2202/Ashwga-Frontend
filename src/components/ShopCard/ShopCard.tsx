@@ -6,8 +6,10 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { StarRating } from "../StarRating";
+import { useNavigate } from "react-router";
 
 interface ShopCardProps {
+  id: string;
   imageSrc: string;
   name: string;
   rating?: number;
@@ -16,14 +18,25 @@ interface ShopCardProps {
 }
 
 const ShopCard: React.FC<ShopCardProps> = ({
+  id,
   imageSrc,
   name,
   rating = 0,
   reviews = 0,
   price,
 }) => {
+  const navigate = useNavigate();
+
+  const goToProductDetails = () => {
+    navigate(`/product/${id}`);
+  };
+
   return (
-    <Card className="w-full max-w-sm h-152 rounded-none border-none shadow-none hover:shadow-xl aspect-3/4 py-1 gap-1 cursor-pointer">
+    <Card
+      id={id}
+      className="w-full max-w-sm h-152 rounded-none border-none shadow-none hover:shadow-xl aspect-3/4 py-1 gap-1 cursor-pointer"
+      onClick={goToProductDetails}
+    >
       <img
         src={imageSrc}
         alt={name}
