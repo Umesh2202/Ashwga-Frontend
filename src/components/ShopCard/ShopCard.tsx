@@ -5,11 +5,12 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+import { StarRating } from "../StarRating";
 
 interface ShopCardProps {
   imageSrc: string;
   name: string;
-  rating?: number; // 0-5
+  rating?: number;
   reviews?: number;
   price: string | number;
 }
@@ -21,13 +22,8 @@ const ShopCard: React.FC<ShopCardProps> = ({
   reviews = 0,
   price,
 }) => {
-  const filled = Math.round(Math.max(0, Math.min(5, rating)));
-  const stars = Array.from({ length: 5 }, (_, i) =>
-    i < filled ? "★" : "☆"
-  ).join("");
-
   return (
-    <Card className="w-full max-w-sm h-152 rounded-none border-none shadow-none hover:shadow-xl aspect-3/4 py-1 gap-1">
+    <Card className="w-full max-w-sm h-152 rounded-none border-none shadow-none hover:shadow-xl aspect-3/4 py-1 gap-1 cursor-pointer">
       <img
         src={imageSrc}
         alt={name}
@@ -39,7 +35,9 @@ const ShopCard: React.FC<ShopCardProps> = ({
             {name}
           </CardTitle>
           <CardDescription className="flex items-center gap-3 min-h-10">
-            <span className="text-yellow-500">{stars}</span>
+            <span className="text-yellow-500">
+              <StarRating rating={rating} />
+            </span>
             <span className="text-sm text-muted-foreground">
               {rating.toFixed(1)} · {reviews} reviews
             </span>
