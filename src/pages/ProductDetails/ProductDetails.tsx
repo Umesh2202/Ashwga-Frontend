@@ -2,6 +2,15 @@ import { ProductDetailsComp } from "@/components";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
+interface Product {
+  id: number;
+  imageSrc: string;
+  name: string;
+  rating: number;
+  reviews: number;
+  price: number;
+}
+
 const products = [
   {
     id: 1,
@@ -97,21 +106,29 @@ const products = [
 
 const ProductDetails = () => {
   const { productId } = useParams();
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState<Product | null>();
 
   useEffect(() => {
     const handleProduct = () => {
       const product = products.find(
         (product) => product.id.toString() == productId
       );
-      setProduct(product || {});
+      setProduct(product || null);
     };
 
     handleProduct();
   });
 
   console.log(product);
-  return <ProductDetailsComp product={product} />;
+  return (
+    <ProductDetailsComp
+      imageSrc={product?.imageSrc}
+      name={product?.name}
+      rating={product?.rating}
+      reviews={product?.reviews}
+      price={product?.price}
+    />
+  );
 };
 
 export default ProductDetails;
