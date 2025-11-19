@@ -26,13 +26,13 @@ const ProductDetailsComp: React.FC<ProductDetailsCompProps> = ({
             <span className="text-3xl max-w-8/10">{name}</span>
             <div className="flex gap-2">
               <span className="flex gap-3">
-                <StarRating rating={rating} />
                 <span className="text-xl justify-center items-center">
                   {rating}
                 </span>
+                <StarRating rating={rating} />
               </span>
               <span className="text-xl text-orange-700 font-semibold">
-                ({reviews})
+                ({reviews} ratings)
               </span>
             </div>
             <div className="flex">

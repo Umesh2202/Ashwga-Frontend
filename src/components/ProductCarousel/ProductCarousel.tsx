@@ -1,9 +1,14 @@
-import { ProductCarousel, ProductDetailsComp } from "@/components";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { ShopCard } from "@/components/ShopCard";
 import type { Product } from "@/types";
 
-const products = [
+const products: Product[] = [
   {
     id: 1,
     imageSrc:
@@ -96,36 +101,30 @@ const products = [
   },
 ];
 
-const ProductDetails = () => {
-  const { productId } = useParams();
-  const [product, setProduct] = useState<Product | null>();
-
-  useEffect(() => {
-    const handleProduct = () => {
-      const product = products.find(
-        (product) => product.id.toString() == productId
-      );
-      setProduct(product || null);
-    };
-
-    handleProduct();
-  });
-
-  console.log(product);
+export function ProductCarousel() {
   return (
-    <>
-      <ProductDetailsComp
-        imageSrc={product?.imageSrc}
-        name={product?.name}
-        rating={product?.rating}
-        reviews={product?.reviews}
-        price={product?.price}
-      />
-      <div className="flex justify-center">
-        <ProductCarousel />
-      </div>
-    </>
+    <Carousel className="w-full max-w-9/10">
+      <CarouselContent>
+        {products.map((product, index) => (
+          <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/4">
+            <div className="">
+              <ShopCard
+                key={product.id.toString()}
+                id={product.id.toString()}
+                imageSrc={product.imageSrc}
+                name={product.name}
+                rating={product.rating}
+                reviews={product.reviews}
+                price={product.price}
+              />
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
   );
-};
+}
 
-export default ProductDetails;
+export default ProductCarousel;
