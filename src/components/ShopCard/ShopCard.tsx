@@ -34,7 +34,7 @@ const ShopCard: React.FC<ShopCardProps> = ({
   return (
     <Card
       id={id}
-      className="w-full max-w-sm h-152 rounded-none border-none shadow-none hover:shadow-xl aspect-3/4 py-1 gap-1 cursor-pointer"
+      className="w-full max-w-100 h-152 rounded-none border-none shadow-none hover:shadow-lg aspect-3/4 py-1 gap-1 cursor-pointer"
       onClick={goToProductDetails}
     >
       <img
