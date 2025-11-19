@@ -1,60 +1,66 @@
-import { Button } from "@/components/ui/button";
+import React from "react";
 import {
   Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
+  CardDescription,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { StarRating } from "../StarRating";
+import { useNavigate } from "react-router";
 
-const ShopCard = () => {
+interface ShopCardProps {
+  id: string;
+  imageSrc: string;
+  name: string;
+  rating?: number;
+  reviews?: number;
+  price: string | number;
+}
+
+const ShopCard: React.FC<ShopCardProps> = ({
+  id,
+  imageSrc,
+  name,
+  rating = 0,
+  reviews = 0,
+  price,
+}) => {
+  const navigate = useNavigate();
+
+  const goToProductDetails = () => {
+    navigate(`/product/${id}`);
+  };
+
   return (
-    <Card className="w-full max-w-sm rounded-none">
-      <CardHeader>
-        <CardTitle>Login to your account</CardTitle>
-        <CardDescription>
-          Enter your email below to login to your account
-        </CardDescription>
-        <CardAction>
-          <Button variant="link">Sign Up</Button>
-        </CardAction>
-      </CardHeader>
-      <CardContent>
-        <form>
-          <div className="flex flex-col gap-6">
-            <div className="grid gap-2">
-              <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                required
-              />
-            </div>
-            <div className="grid gap-2">
-              <div className="flex items-center">
-                <a
-                  href="#"
-                  className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                >
-                  Forgot your password?
-                </a>
-              </div>
-              <Input id="password" type="password" required />
-            </div>
+    <Card
+      id={id}
+      className="w-full max-w-100 h-152 rounded-none border-none shadow-none hover:shadow-lg aspect-3/4 py-1 gap-1 cursor-pointer"
+      onClick={goToProductDetails}
+    >
+      <img
+        src={imageSrc}
+        alt={name}
+        className="w-full object-contain rounded-t-none h-92"
+      />
+      <div>
+        <CardHeader className="pt-4">
+          <CardTitle className="text-lg min-h-24 line-clamp-4">
+            {name}
+          </CardTitle>
+          <CardDescription className="flex items-center gap-3 min-h-10">
+            <span className="text-yellow-500">
+              <StarRating rating={rating} />
+            </span>
+            <span className="text-sm text-muted-foreground">
+              {rating.toFixed(1)} · {reviews} reviews
+            </span>
+          </CardDescription>
+          <div className="font-semibold">
+            <span>₹</span>
+            <span className="text-lg mx-1">{price}</span>
           </div>
-        </form>
-      </CardContent>
-      <CardFooter className="flex-col gap-2">
-        <Button type="submit" className="w-full">
-          Login
-        </Button>
-        <Button variant="outline" className="w-full">
-          Login with Google
-        </Button>
-      </CardFooter>
+        </CardHeader>
+      </div>
     </Card>
   );
 };

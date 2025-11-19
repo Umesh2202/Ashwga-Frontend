@@ -1,15 +1,18 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home } from "../pages";
+import { Home, ProductDetails } from "@/pages";
 import Layout from "../pages/layout";
 import Centerer from "./Centerer";
+import ScrollToTop from "./ScrollToTop";
 
 const Router = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route element={<Layout />}>
           <Route element={<Centerer />}>
             <Route path="/" element={<Home />} />
+            <Route path="/product/:productId" element={<ProductDetails />} />
           </Route>
         </Route>
       </Routes>

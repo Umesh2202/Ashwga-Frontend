@@ -4,7 +4,7 @@ import { Outlet } from "react-router";
 const Centerer = () => {
   return (
     <React.Fragment>
-      <div className="max-w-8/10 mx-auto bg-white min-h-screen">
+      <div className="max-w-17/20 mx-auto bg-white min-h-screen">
         <Outlet />
       </div>
     </React.Fragment>
