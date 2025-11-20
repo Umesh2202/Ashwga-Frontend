@@ -111,18 +111,26 @@ const ProductDetails = () => {
     handleProduct();
   });
 
-  console.log(product);
   return (
     <>
-      <ProductDetailsComp
-        imageSrc={product?.imageSrc}
-        name={product?.name}
-        rating={product?.rating}
-        reviews={product?.reviews}
-        price={product?.price}
-      />
-      <div className="flex justify-center">
-        <ProductCarousel />
+      <div className="mb-6">
+        <ProductDetailsComp
+          imageSrc={product?.imageSrc}
+          name={product?.name}
+          rating={product?.rating}
+          reviews={product?.reviews}
+          price={product?.price}
+        />
+      </div>
+      <div className="border-t border-gray-300 w-full"></div>
+
+      <div>
+        <div className="flex justify-center mt-6 text-2xl font-bold">
+          <span>Other Products</span>
+        </div>
+        <div className="flex justify-center">
+          <ProductCarousel />
+        </div>
       </div>
     </>
   );
