@@ -5,7 +5,7 @@ interface MyButtonProps {
   fontSize: string;
   css: string;
   text: string;
-  onButtonClick: () => void; // Added for completeness, as it's in the interface
+  onButtonClick: () => void;
 }
 
 const MyButton: React.FC<MyButtonProps> = ({

@@ -1,7 +1,9 @@
 import { StarRating, Button, Counter } from "@/components";
+import { useOrderItemMutation } from "@/services/queries/order.query";
 import { useProductStore } from "@/store";
 
 interface ProductDetailsCompProps {
+  id: string | undefined;
   imageSrc: string | undefined;
   name: string | undefined;
   rating: number | undefined;
@@ -10,6 +12,7 @@ interface ProductDetailsCompProps {
 }
 
 const ProductDetailsComp: React.FC<ProductDetailsCompProps> = ({
+  id,
   imageSrc,
   name,
   rating = 0,
@@ -17,6 +20,18 @@ const ProductDetailsComp: React.FC<ProductDetailsCompProps> = ({
   price,
 }) => {
   const { count, increment } = useProductStore();
+
+  const { mutateAsync: orderItem } = useOrderItemMutation();
+
+  const handleOnClick = () => {
+    orderItem({
+      name,
+      amount: 1,
+      userId: 1,
+      productId: id,
+    });
+    increment();
+  };
 
   return (
     <>
@@ -51,11 +66,10 @@ const ProductDetailsComp: React.FC<ProductDetailsCompProps> = ({
                 text="BUY"
                 css="bg-yellow-500 w-1/2"
                 fontSize=""
-                onButtonClick={increment}
+                onButtonClick={handleOnClick}
               />
             ) : (
-              // <Counter initialCount={count} />
-              <Counter initialCount={count} />
+              <Counter onButtonClick={handleOnClick} productId={Number(id)} />
             )}
           </div>
         </div>

@@ -115,6 +115,7 @@ const ProductDetails = () => {
     <>
       <div className="mb-6">
         <ProductDetailsComp
+          id={productId}
           imageSrc={product?.imageSrc}
           name={product?.name}
           rating={product?.rating}
