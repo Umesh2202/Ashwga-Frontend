@@ -48,7 +48,7 @@ const ShopCard: React.FC<ShopCardProps> = ({
             {name}
           </CardTitle>
           <CardDescription className="flex items-center gap-3 min-h-10">
-            <span className="text-yellow-500">
+            <span>
               <StarRating rating={rating} />
             </span>
             <span className="text-sm text-muted-foreground">
