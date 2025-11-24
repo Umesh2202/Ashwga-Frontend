@@ -8,7 +8,7 @@ interface CounterProps {
 }
 
 const Counter: React.FC<CounterProps> = ({ onButtonClick, productId }) => {
-  const { count, increment, decrement } = useProductStore();
+  const { count, decrement } = useProductStore();
 
   const { mutateAsync: deleteOrder } = useDeleteOrderMutation();
 
@@ -31,7 +31,6 @@ const Counter: React.FC<CounterProps> = ({ onButtonClick, productId }) => {
           className="border-l p-2 w-full flex justify-center text-2xl cursor-pointer"
           onClick={() => {
             onButtonClick();
-            increment();
           }}
         >
           <i className="fa-solid fa-plus"></i>

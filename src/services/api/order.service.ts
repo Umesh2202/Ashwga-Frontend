@@ -8,6 +8,6 @@ export const orderItem = async (payload: OrderItemRequest)=>{
 }
 
 export const deleteOrder = async (body: DeleteOrderRequest)=>{
-    const response = await axios.post(MICROSERVICES.ORDER + `/${body.userId}/${body.productId}`);
+    const response = await axios.delete(MICROSERVICES.ORDER + `/delete/${body.userId}/${body.productId}`);
     return response;
 }
