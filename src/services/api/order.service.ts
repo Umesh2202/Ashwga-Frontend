@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { MICROSERVICES } from "@/constants"
-import type { DeleteOrderRequest, OrderItemRequest } from '@/types/Order';
+import type { DeleteOrderRequest, OrderItemRequest } from '@/types';
 
 export const orderItem = async (payload: OrderItemRequest)=>{
     const response = await axios.post(MICROSERVICES.ORDER + "/add", payload);

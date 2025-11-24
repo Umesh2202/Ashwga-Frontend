@@ -1,23 +1,23 @@
 import { Button } from "@/components/ui/button";
-import React from "react"; // Import React if not already implicitly available
+import React from "react";
 
 interface MyButtonProps {
-  fontSize: string;
+  fontSize?: string;
   css: string;
   text: string;
-  onButtonClick: () => void;
+  onButtonClick?: () => void;
 }
 
 const MyButton: React.FC<MyButtonProps> = ({
   fontSize = "",
   css,
   text,
-  onButtonClick, // Use this for the button's onClick handler
+  onButtonClick = undefined,
 }) => {
   return (
     <div>
       <Button
-        onClick={onButtonClick} // Execute the function passed from the parent
+        onClick={onButtonClick}
         className={`cursor-pointer rounded-none ${css} ${fontSize} p-5 text-black hover:underline flex flex-col items-center justify-center`}
       >
         {text}

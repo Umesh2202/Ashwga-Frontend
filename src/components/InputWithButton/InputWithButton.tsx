@@ -1,14 +1,13 @@
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components";
+import { Button, Input } from "@/components";
 
-const InputWithButton = (props) => {
+interface InputWithButtonProps {
+  text: string;
+}
+
+const InputWithButton: React.FC<InputWithButtonProps> = (props) => {
   return (
     <div className="flex w-full max-w-dvh items-center gap-2">
-      <Input
-        className="rounded-none bg-white"
-        type="email"
-        placeholder="Search"
-      />
+      <Input type="search" placeholder="Search" />
       <Button text={props.text} css="bg-yellow-500" />
     </div>
   );

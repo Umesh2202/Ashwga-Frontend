@@ -6,3 +6,11 @@ export interface Product {
   reviews: number;
   price: number;
 }
+
+export interface AddProductRequest{
+  imageSrc: File | null;
+  name: string;
+  price: number;
+  amountAvailable: number;
+  description: string;
+}
