@@ -1,8 +1,11 @@
 import axios from 'axios';
 import { MICROSERVICES } from "@/constants"
-import type { AddProductRequest } from '@/types';
 
-export const addProduct = async (payload: AddProductRequest)=>{
-    const response = await axios.post(MICROSERVICES.PRODUCT + "/add", payload);
+export const addProduct = async (payload: FormData)=>{
+    const response = await axios.post(MICROSERVICES.PRODUCT + "/add", payload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
     return response;
 }
