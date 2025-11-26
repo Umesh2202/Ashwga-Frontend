@@ -1,10 +1,11 @@
 export interface Product {
   id: number;
-  imageSrc: string;
+  imageData: string;
   name: string;
   rating: number;
   reviews: number;
   price: number;
+  description?:string;
 }
 
 export interface AddProductRequest{

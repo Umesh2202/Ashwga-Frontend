@@ -9,3 +9,13 @@ export const addProduct = async (payload: FormData)=>{
       });
     return response;
 }
+
+export const getAllProducts = async ()=>{
+    const response = await axios.get(MICROSERVICES.PRODUCT + "/all");
+    return response;
+  }
+  
+  export const getProductByProductId = async (productId : string)=>{
+  const response = await axios.get(MICROSERVICES.PRODUCT + `/${productId}`);
+  return response;
+}
