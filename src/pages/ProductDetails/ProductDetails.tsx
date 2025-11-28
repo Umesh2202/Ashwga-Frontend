@@ -2,8 +2,11 @@ import { ProductCarousel, ProductDetailsComp } from "@/components";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import type { Product } from "@/types";
-import { useGetProductByProductIdMutation } from "@/services/queries";
-import { useGetRatingOfProducts } from "@/services/queries/rating.query";
+import {
+  useGetProductByProductIdMutation,
+  useGetRatingOfProductsMutation,
+} from "@/services/queries";
+
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState<Product | null>();
@@ -13,7 +16,7 @@ const ProductDetails = () => {
   const { mutateAsync: getProductByProductId } =
     useGetProductByProductIdMutation();
 
-  const { mutateAsync: getRatingOfProducts } = useGetRatingOfProducts();
+  const { mutateAsync: getRatingOfProducts } = useGetRatingOfProductsMutation();
 
   useEffect(() => {
     const handleProduct = async () => {
@@ -39,7 +42,7 @@ const ProductDetails = () => {
           name={product?.name}
           description={product?.description}
           rating={product?.rating}
-          reviews={product?.reviews}
+          ratingsCount={product?.ratingsCount}
           price={product?.price}
         />
       </div>

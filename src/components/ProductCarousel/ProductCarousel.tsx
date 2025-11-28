@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -7,20 +8,17 @@ import {
 } from "@/components/ui/carousel";
 import { ShopCard } from "@/components/ShopCard";
 import type { Product } from "@/types";
-import { useGetAllProductsMutation } from "@/services/queries";
-import { useEffect, useState } from "react";
-import { useGetRatingOfProducts } from "@/services/queries/rating.query";
-
-interface RatingItem {
-  productId: number;
-  averageRating: number;
-}
+import {
+  useGetAllProductsMutation,
+  useGetRatingOfProductsMutation,
+} from "@/services/queries";
+import { getRatingsData } from "@/helpers";
 
 export function ProductCarousel() {
   const [products, setProducts] = useState<Product[] | []>([]);
 
   const { mutateAsync: getAllProducts } = useGetAllProductsMutation();
-  const { mutateAsync: getRatingOfProducts } = useGetRatingOfProducts();
+  const { mutateAsync: getRatingOfProducts } = useGetRatingOfProductsMutation();
 
   const imagePrefix = "data:image/jpeg;base64,";
 
@@ -29,24 +27,11 @@ export function ProductCarousel() {
       try {
         const currentProducts = await getAllProducts();
         const productData = currentProducts.data;
+        const productIds = productData.map((product: Product) => product.id);
+        const ratings = await getRatingOfProducts({ productIds });
 
-        if (productData && productData.length > 0) {
-          const productIds = productData.map((product: Product) => product.id);
-          const ratings = await getRatingOfProducts({ productIds });
-
-          const ratingMap = (ratings.data as RatingItem[]).reduce<
-            Record<number, number>
-          >((acc, current) => {
-            acc[current.productId] = current.averageRating;
-            return acc;
-          }, {});
-
-          const mergedData = productData.map((product: Product) => ({
-            ...product,
-            rating: Number(ratingMap[product.id]),
-          }));
-          setProducts(mergedData);
-        }
+        const mergedData = getRatingsData(productData, ratings.data);
+        setProducts(mergedData);
       } catch (error) {
         console.error("Error fetching data", error);
       }
@@ -67,7 +52,7 @@ export function ProductCarousel() {
                 imageSrc={imagePrefix + product.imageData}
                 name={product.name}
                 rating={product.rating}
-                reviews={product.reviews}
+                ratingsCount={product.ratingsCount}
                 price={product.price}
               />
             </div>

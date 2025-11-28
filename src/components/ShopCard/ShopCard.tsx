@@ -13,7 +13,7 @@ interface ShopCardProps {
   imageSrc: string;
   name: string;
   rating?: number;
-  reviews?: number;
+  ratingsCount?: number;
   price: string | number;
 }
 
@@ -22,9 +22,10 @@ const ShopCard: React.FC<ShopCardProps> = ({
   imageSrc,
   name,
   rating = 0,
-  reviews = 0,
+  ratingsCount = 0,
   price,
 }) => {
+  console.log("ratingscount:", ratingsCount);
   const navigate = useNavigate();
 
   const goToProductDetails = () => {
@@ -52,7 +53,7 @@ const ShopCard: React.FC<ShopCardProps> = ({
               <StarRating rating={rating} />
             </span>
             <span className="text-sm text-muted-foreground">
-              {rating.toFixed(1)} · {reviews} reviews
+              {rating.toFixed(1)} · {ratingsCount} ratings
             </span>
           </CardDescription>
           <div className="font-semibold">
