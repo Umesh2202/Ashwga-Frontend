@@ -9,6 +9,7 @@ interface ProductDetailsCompProps {
   rating: number | undefined;
   reviews: number | undefined;
   price: number | undefined;
+  description: string | undefined;
 }
 
 const ProductDetailsComp: React.FC<ProductDetailsCompProps> = ({
@@ -18,6 +19,7 @@ const ProductDetailsComp: React.FC<ProductDetailsCompProps> = ({
   rating = 0,
   reviews = 0,
   price,
+  description,
 }) => {
   const { count, increment } = useProductStore();
 
@@ -37,12 +39,13 @@ const ProductDetailsComp: React.FC<ProductDetailsCompProps> = ({
     <>
       <div className="grid grid-cols-2 pt-20">
         <div className="flex justify-center items-center">
-          <img src={imageSrc} alt="" />
+          <img src={imageSrc} alt="" className="max-w-1/2" />
         </div>
         <div className="flex flex-col gap-5">
           <div>
             <div className="flex flex-col gap-5">
-              <span className="text-3xl max-w-8/10">{name}</span>
+              <span className="text-4xl max-w-8/10">{name}</span>
+              <span className="text-xl max-w-8/10">{description}</span>
               <div className="flex gap-2">
                 <span className="flex gap-3">
                   <span className="text-xl justify-center items-center">
