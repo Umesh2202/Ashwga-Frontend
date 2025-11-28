@@ -49,7 +49,7 @@ const ProductDetailsComp: React.FC<ProductDetailsCompProps> = ({
               <div className="flex gap-2">
                 <span className="flex gap-3">
                   <span className="text-xl justify-center items-center">
-                    {rating}
+                    {rating.toFixed(1)}
                   </span>
                   <StarRating rating={rating} />
                 </span>

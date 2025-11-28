@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import type { Product } from "@/types";
 import { useGetProductByProductIdMutation } from "@/services/queries";
+import { useGetRatingOfProducts } from "@/services/queries/rating.query";
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState<Product | null>();
@@ -12,15 +13,22 @@ const ProductDetails = () => {
   const { mutateAsync: getProductByProductId } =
     useGetProductByProductIdMutation();
 
+  const { mutateAsync: getRatingOfProducts } = useGetRatingOfProducts();
+
   useEffect(() => {
     const handleProduct = async () => {
       const product = await getProductByProductId(productId || "");
 
+      const rating = await getRatingOfProducts({
+        productIds: [Number(productId)],
+      });
+
+      product.data["rating"] = Number(rating.data[0].averageRating);
       setProduct(product.data || null);
     };
 
     handleProduct();
-  }, [productId, getProductByProductId]);
+  }, [productId, getProductByProductId, getRatingOfProducts]);
 
   return (
     <>
