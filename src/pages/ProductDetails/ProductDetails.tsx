@@ -1,6 +1,6 @@
-import { ProductCarousel, ProductDetailsComp } from "@/components";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { ProductCarousel, ProductDetailsComp } from "@/components";
 import type { Product } from "@/types";
 import {
   useGetProductByProductIdMutation,
@@ -27,6 +27,7 @@ const ProductDetails = () => {
       });
 
       product.data["rating"] = Number(rating.data[0].averageRating);
+      product.data["ratingsCount"] = Number(rating.data[0].ratingsCount);
       setProduct(product.data || null);
     };
 
