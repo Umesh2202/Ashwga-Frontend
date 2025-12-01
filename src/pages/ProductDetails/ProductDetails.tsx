@@ -1,8 +1,12 @@
-import { ProductCarousel, ProductDetailsComp } from "@/components";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { ProductCarousel, ProductDetailsComp } from "@/components";
 import type { Product } from "@/types";
-import { useGetProductByProductIdMutation } from "@/services/queries";
+import {
+  useGetProductByProductIdMutation,
+  useGetRatingOfProductsMutation,
+} from "@/services/queries";
+
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState<Product | null>();
@@ -12,15 +16,23 @@ const ProductDetails = () => {
   const { mutateAsync: getProductByProductId } =
     useGetProductByProductIdMutation();
 
+  const { mutateAsync: getRatingOfProducts } = useGetRatingOfProductsMutation();
+
   useEffect(() => {
     const handleProduct = async () => {
       const product = await getProductByProductId(productId || "");
 
+      const rating = await getRatingOfProducts({
+        productIds: [Number(productId)],
+      });
+
+      product.data["rating"] = Number(rating.data[0].averageRating);
+      product.data["ratingsCount"] = Number(rating.data[0].ratingsCount);
       setProduct(product.data || null);
     };
 
     handleProduct();
-  }, [productId, getProductByProductId]);
+  }, [productId, getProductByProductId, getRatingOfProducts]);
 
   return (
     <>
@@ -31,7 +43,7 @@ const ProductDetails = () => {
           name={product?.name}
           description={product?.description}
           rating={product?.rating}
-          reviews={product?.reviews}
+          ratingsCount={product?.ratingsCount}
           price={product?.price}
         />
       </div>

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -7,25 +8,37 @@ import {
 } from "@/components/ui/carousel";
 import { ShopCard } from "@/components/ShopCard";
 import type { Product } from "@/types";
-import { useGetAllProductsMutation } from "@/services/queries";
-import { useEffect, useState } from "react";
+import {
+  useGetAllProductsMutation,
+  useGetRatingOfProductsMutation,
+} from "@/services/queries";
+import { getRatingsData } from "@/helpers";
 
 export function ProductCarousel() {
   const [products, setProducts] = useState<Product[] | []>([]);
 
   const { mutateAsync: getAllProducts } = useGetAllProductsMutation();
+  const { mutateAsync: getRatingOfProducts } = useGetRatingOfProductsMutation();
 
   const imagePrefix = "data:image/jpeg;base64,";
 
   useEffect(() => {
-    const getCurrentProducts = async () => {
-      const currentProducts = await getAllProducts();
-      console.log(currentProducts.data);
-      setProducts(currentProducts.data);
+    const initData = async () => {
+      try {
+        const currentProducts = await getAllProducts();
+        const productData = currentProducts.data;
+        const productIds = productData.map((product: Product) => product.id);
+        const ratings = await getRatingOfProducts({ productIds });
+
+        const mergedData = getRatingsData(productData, ratings.data);
+        setProducts(mergedData);
+      } catch (error) {
+        console.error("Error fetching data", error);
+      }
     };
 
-    getCurrentProducts();
-  }, [getAllProducts]);
+    initData();
+  }, [getAllProducts, getRatingOfProducts]);
 
   return (
     <Carousel className="w-full max-w-9/10">
@@ -39,7 +52,7 @@ export function ProductCarousel() {
                 imageSrc={imagePrefix + product.imageData}
                 name={product.name}
                 rating={product.rating}
-                reviews={product.reviews}
+                ratingsCount={product.ratingsCount}
                 price={product.price}
               />
             </div>

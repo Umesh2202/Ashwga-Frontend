@@ -1,5 +1,5 @@
 import { StarRating, Button, Counter } from "@/components";
-import { useOrderItemMutation } from "@/services/queries/order.query";
+import { useOrderItemMutation } from "@/services/queries";
 import { useProductStore } from "@/store";
 
 interface ProductDetailsCompProps {
@@ -7,7 +7,7 @@ interface ProductDetailsCompProps {
   imageSrc: string | undefined;
   name: string | undefined;
   rating: number | undefined;
-  reviews: number | undefined;
+  ratingsCount: number | undefined;
   price: number | undefined;
   description: string | undefined;
 }
@@ -17,7 +17,7 @@ const ProductDetailsComp: React.FC<ProductDetailsCompProps> = ({
   imageSrc,
   name,
   rating = 0,
-  reviews = 0,
+  ratingsCount = 0,
   price,
   description,
 }) => {
@@ -49,12 +49,12 @@ const ProductDetailsComp: React.FC<ProductDetailsCompProps> = ({
               <div className="flex gap-2">
                 <span className="flex gap-3">
                   <span className="text-xl justify-center items-center">
-                    {rating}
+                    {rating.toFixed(1)}
                   </span>
                   <StarRating rating={rating} />
                 </span>
                 <span className="text-xl text-orange-700 font-semibold">
-                  ({reviews} ratings)
+                  ({ratingsCount} ratings)
                 </span>
               </div>
               <div className="flex">

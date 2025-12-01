@@ -15,7 +15,7 @@ export const getAllProducts = async ()=>{
     return response;
   }
   
-  export const getProductByProductId = async (productId : string)=>{
+export const getProductByProductId = async (productId : string)=>{
   const response = await axios.get(MICROSERVICES.PRODUCT + `/${productId}`);
   return response;
 }
