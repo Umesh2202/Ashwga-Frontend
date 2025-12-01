@@ -28,7 +28,7 @@ const AddProduct = () => {
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]; // Get the first selected file
+    const file = event.target.files?.[0];
     if (file) {
       setImageFile(file);
       console.log("File selected:", file.name);
@@ -66,6 +66,41 @@ const AddProduct = () => {
     addProduct(formData);
   };
 
+  const productFields = [
+    {
+      id: "name",
+      label: "Name of Product",
+      placeholder: "Name of Product",
+      type: "text",
+      value: name,
+      setter: setName,
+    },
+    {
+      id: "price",
+      label: "Price of Product",
+      placeholder: "Price",
+      type: "number",
+      value: price,
+      setter: setPrice,
+    },
+    {
+      id: "amount",
+      label: "Amount Available",
+      placeholder: "Amount Available",
+      type: "number",
+      value: amountAvailable,
+      setter: setAmountAvailable,
+    },
+    {
+      id: "description",
+      label: "Description of Product",
+      placeholder: "Description",
+      type: "text",
+      value: description,
+      setter: setDescription,
+    },
+  ];
+
   return (
     <div className="flex flex-col items-center pt-10 pb-10">
       <span className="text-5xl font-semibold">
@@ -73,70 +108,26 @@ const AddProduct = () => {
       </span>
       <form action="#" className="w-1/2" onSubmit={handleOnSubmit}>
         <div className="flex flex-col gap-6 mt-8">
-          <div>
-            <div className={`text-${fieldTextSize}`}>Name of Product</div>
-            <div>
-              <Input
-                type="text"
-                placeholder="Name of Product"
-                background={inputBackground}
-                value={name}
-                onChange={(e) =>
-                  handleOnChange(setName as SetterFunction, e.target.value)
-                }
-              />
+          {productFields.map((field) => (
+            <div key={field.id}>
+              <div className={`text-${fieldTextSize}`}>{field.label}</div>
+              <div>
+                <Input
+                  type={field.type}
+                  placeholder={field.placeholder}
+                  background={inputBackground}
+                  value={field.value}
+                  onChange={(e) =>
+                    handleOnChange(
+                      field.setter as SetterFunction,
+                      e.target.value
+                    )
+                  }
+                />
+              </div>
             </div>
-          </div>
-          <div>
-            <div className={`text-${fieldTextSize}`}>Price of Product</div>
-            <div>
-              <Input
-                type="number"
-                placeholder="Price"
-                background={inputBackground}
-                value={price}
-                onChange={(e) =>
-                  handleOnChange(setPrice as SetterFunction, e.target.value)
-                }
-              />
-            </div>
-          </div>
-          <div>
-            <div className={`text-${fieldTextSize}`}>Amount Available</div>
-            <div>
-              <Input
-                type="number"
-                placeholder="Amount Available"
-                background={inputBackground}
-                value={amountAvailable}
-                onChange={(e) =>
-                  handleOnChange(
-                    setAmountAvailable as SetterFunction,
-                    e.target.value
-                  )
-                }
-              />
-            </div>
-          </div>
-          <div>
-            <div className={`text-${fieldTextSize}`}>
-              Description of Product
-            </div>
-            <div>
-              <Input
-                type="text"
-                placeholder="Description"
-                background={inputBackground}
-                value={description}
-                onChange={(e) =>
-                  handleOnChange(
-                    setDescription as SetterFunction,
-                    e.target.value
-                  )
-                }
-              />
-            </div>
-          </div>
+          ))}
+
           <div>
             <div className={`text-${fieldTextSize}`}>
               Upload Image of Product
@@ -150,6 +141,7 @@ const AddProduct = () => {
               />
             </div>
           </div>
+
           <div>
             <Button
               type="submit"
