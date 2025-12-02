@@ -1,5 +1,6 @@
 import { Button, Input } from "@/components";
 import { useAddUserMutation } from "@/services/queries/user.query";
+import useUserStore from "@/store/useUserStore";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -24,6 +25,9 @@ const Login = () => {
 
   const handleOnSubmit = async () => {
     await addUser({ firstName, lastName, email, password });
+    useUserStore
+      .getState()
+      .setUserDetails({ firstName, lastName, email, password });
     navigate("/");
   };
 

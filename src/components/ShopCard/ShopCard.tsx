@@ -25,7 +25,6 @@ const ShopCard: React.FC<ShopCardProps> = ({
   ratingsCount = 0,
   price,
 }) => {
-  console.log("ratingscount:", ratingsCount);
   const navigate = useNavigate();
 
   const goToProductDetails = () => {
