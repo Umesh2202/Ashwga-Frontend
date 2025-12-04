@@ -1,4 +1,4 @@
-import { Button, Input } from "@/components";
+import { Button, Input, Spinner } from "@/components";
 import { useAddUserMutation } from "@/services/queries/user.query";
 import useUserStore from "@/store/useUserStore";
 import { useState } from "react";
@@ -17,18 +17,24 @@ const Login = () => {
   const inputBackground = "neutral-100";
   const fieldTextSize = "xl";
 
-  const { mutateAsync: addUser } = useAddUserMutation();
+  const { mutateAsync: addUser, isPending } = useAddUserMutation();
 
   const handleOnChange = (setter: SetterFunction, value: string | number) => {
     setter(value);
   };
 
-  const handleOnSubmit = async () => {
-    await addUser({ firstName, lastName, email, password });
-    useUserStore
-      .getState()
-      .setUserDetails({ firstName, lastName, email, password });
-    navigate("/");
+  const handleOnSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      await addUser({ firstName, lastName, email, password });
+      useUserStore
+        .getState()
+        .setUserDetails({ firstName, lastName, email, password });
+      navigate("/");
+    } catch (error) {
+      console.error("Login failed", error);
+    }
   };
 
   const inputFields = [
@@ -67,7 +73,7 @@ const Login = () => {
       <span className="text-5xl font-semibold">
         Please Add Required Details of User
       </span>
-      <form action="#" className="w-1/2" onSubmit={handleOnSubmit}>
+      <form className="w-1/2" onSubmit={handleOnSubmit}>
         <div className="flex flex-col gap-6 mt-8">
           {inputFields.map((field) => (
             <div key={field.id}>
@@ -78,6 +84,7 @@ const Login = () => {
                   placeholder={field.label}
                   background={inputBackground}
                   value={field.value}
+                  disabled={isPending}
                   onChange={(e) =>
                     handleOnChange(
                       field.setter as SetterFunction,
@@ -91,9 +98,18 @@ const Login = () => {
           <div>
             <Button
               type="submit"
-              text="Login"
+              text={
+                isPending ? (
+                  <div className="flex items-center gap-2 w-12 justify-center">
+                    <Spinner />
+                  </div>
+                ) : (
+                  "Login"
+                )
+              }
               css="bg-yellow-500"
               fontSize="text-xl"
+              disabled={isPending}
             />
           </div>
         </div>

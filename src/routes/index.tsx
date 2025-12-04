@@ -3,11 +3,13 @@ import { AddProduct, Home, Login, ProductDetails } from "@/pages";
 import Layout from "../pages/layout";
 import Centerer from "./Centerer";
 import ScrollToTop from "./ScrollToTop";
+import { ToastConfig } from "@/components";
 
 const Router = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <ToastConfig />
       <Routes>
         <Route element={<Layout />}>
           <Route element={<Centerer />}>

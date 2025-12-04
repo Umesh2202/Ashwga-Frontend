@@ -1,4 +1,4 @@
-import { Button, InputWithButton } from "@/components";
+import { Button, InputWithButton, showToast } from "@/components";
 import useUserStore from "@/store/useUserStore";
 import { useNavigate } from "react-router";
 
@@ -31,7 +31,13 @@ const Navbar = () => {
         ) : (
           <div className="flex justify-around p-2 gap-3 items-center">
             <div>
-              <Button text="Login" css="bg-yellow-500" />
+              <Button
+                text="Login"
+                css="bg-yellow-500"
+                onButtonClick={() =>
+                  showToast("Data loaded successfully", "success")
+                }
+              />
             </div>
             <div>
               <Button
