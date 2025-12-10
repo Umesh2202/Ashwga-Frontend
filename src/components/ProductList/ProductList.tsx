@@ -1,4 +1,4 @@
-import { ShopCard } from "@/components/ShopCard";
+import { ShopCard, AddProduct } from "@/components";
 import { getRatingsData } from "@/helpers";
 import {
   useGetAllProductsMutation,
@@ -47,7 +47,15 @@ const ProductList = () => {
     );
   });
 
-  return <ul className="grid grid-cols-4 gap-y-4">{userElements}</ul>;
+  return (
+    <div>
+      <ul className="grid grid-cols-4 gap-y-4">
+        {userElements}
+        <AddProduct />
+      </ul>
+      ;
+    </div>
+  );
 };
 
 export default ProductList;
