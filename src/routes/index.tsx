@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AddProduct, Home, Login, ProductDetails } from "@/pages";
+import { AddProduct, Home, Login, ProductDetails, SignUp } from "@/pages";
 import Layout from "../pages/layout";
 import Centerer from "./Centerer";
 import ScrollToTop from "./ScrollToTop";
@@ -17,6 +17,7 @@ const Router = () => {
             <Route path="/product/:productId" element={<ProductDetails />} />
             <Route path="/product/add" element={<AddProduct />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/signUp" element={<SignUp />} />
           </Route>
         </Route>
       </Routes>

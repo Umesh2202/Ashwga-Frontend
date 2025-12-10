@@ -8,6 +8,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    showToast("Logout Successfully", "success");
     reset();
   };
 
@@ -34,16 +35,14 @@ const Navbar = () => {
               <Button
                 text="Login"
                 css="bg-yellow-500"
-                onButtonClick={() =>
-                  showToast("Data loaded successfully", "success")
-                }
+                onButtonClick={() => navigate("/login")}
               />
             </div>
             <div>
               <Button
                 text="Sign Up"
                 css="bg-yellow-500"
-                onButtonClick={() => navigate("/login")}
+                onButtonClick={() => navigate("/signUp")}
               />
             </div>
           </div>

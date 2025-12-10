@@ -1,12 +1,12 @@
 import { Button, Input, showToast, Spinner } from "@/components";
-import { useLoginUserMutation } from "@/services/queries/user.query";
+import { useAddUserMutation } from "@/services/queries/user.query";
 import useUserStore from "@/store/useUserStore";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 
 type SetterFunction = React.Dispatch<React.SetStateAction<string | number>>;
 
-const Login = () => {
+const SignUp = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -17,11 +17,7 @@ const Login = () => {
   const inputBackground = "neutral-100";
   const fieldTextSize = "xl";
 
-  const {
-    mutateAsync: loginUser,
-    isPending,
-    error: loginUserError,
-  } = useLoginUserMutation();
+  const { mutateAsync: addUser, isPending } = useAddUserMutation();
 
   const handleOnChange = (setter: SetterFunction, value: string | number) => {
     setter(value);
@@ -31,7 +27,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      await loginUser({ firstName, lastName, email, password });
+      await addUser({ firstName, lastName, email, password });
       useUserStore
         .getState()
         .setUserDetails({ firstName, lastName, email, password });
@@ -41,10 +37,6 @@ const Login = () => {
       console.error("Login failed", error);
     }
   };
-
-  useEffect(() => {
-    if (loginUserError) showToast("User Not Found", "error");
-  }, [loginUserError]);
 
   const inputFields = [
     {
@@ -79,9 +71,7 @@ const Login = () => {
 
   return (
     <div className="flex flex-col items-center pt-10 pb-10">
-      <span className="text-5xl font-semibold">
-        Login with Current Credentials
-      </span>
+      <span className="text-5xl font-semibold">Sign Up as New User</span>
       <form className="w-1/2" onSubmit={handleOnSubmit}>
         <div className="flex flex-col gap-6 mt-8">
           {inputFields.map((field) => (
@@ -127,4 +117,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
