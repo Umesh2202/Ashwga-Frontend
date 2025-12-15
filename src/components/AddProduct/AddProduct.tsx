@@ -6,7 +6,7 @@ export function AddProduct() {
 
   return (
     <Card
-      className="w-full max-w-100 h-152 rounded-none border-none shadow-none hover:shadow-lg aspect-3/4 py-1 gap-1 cursor-pointer flex justify-center items-center"
+      className="w-full max-w-100 h-152 rounded-none border shadow-none hover:shadow-lg aspect-3/4 py-1 gap-1 cursor-pointer flex justify-center items-center"
       onClick={() => navigate("/product/add")}
     >
       <svg

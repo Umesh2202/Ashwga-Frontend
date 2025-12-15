@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { GlobalSpinner } from "@/components";
 import "./App.css";
 import Router from "./routes";
 
@@ -7,6 +8,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <GlobalSpinner />
       <Router />
     </QueryClientProvider>
   );
