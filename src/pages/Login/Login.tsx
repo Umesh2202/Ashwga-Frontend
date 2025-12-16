@@ -30,16 +30,12 @@ const Login = () => {
   const handleOnSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
-      await loginUser({ firstName, lastName, email, password });
-      useUserStore
-        .getState()
-        .setUserDetails({ firstName, lastName, email, password });
-      showToast("Login Successfully", "success");
-      navigate("/");
-    } catch (error) {
-      console.error("Login failed", error);
-    }
+    await loginUser({ firstName, lastName, email, password });
+    useUserStore
+      .getState()
+      .setUserDetails({ firstName, lastName, email, password });
+    showToast("Login Successfully", "success");
+    navigate("/");
   };
 
   useEffect(() => {

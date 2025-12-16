@@ -1,6 +1,7 @@
-import { Button, Input } from "@/components";
+import { Button, Input, showToast } from "@/components";
 import { useAddProductMutation } from "@/services/queries";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
 type SetterFunction = React.Dispatch<React.SetStateAction<string | number>>;
 
@@ -12,7 +13,13 @@ const AddProduct = () => {
 
   const [imageFile, setImageFile] = useState<File | null>(null);
 
-  const { mutateAsync: addProduct } = useAddProductMutation();
+  const navigate = useNavigate();
+
+  const {
+    mutateAsync: addProduct,
+    isPending,
+    error: addProductError,
+  } = useAddProductMutation();
 
   const inputBackground = "neutral-100";
   const fieldTextSize = "xl";
@@ -37,7 +44,8 @@ const AddProduct = () => {
     }
   };
 
-  const handleOnSubmit = () => {
+  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const formData = new FormData();
 
     if (imageFile) {
@@ -64,7 +72,15 @@ const AddProduct = () => {
     );
 
     addProduct(formData);
+
+    showToast("Product Added Successfully", "success");
+
+    navigate("/");
   };
+
+  useEffect(() => {
+    if (addProductError) showToast("Could Not Add Product", "error");
+  }, [addProductError]);
 
   const productFields = [
     {
@@ -117,6 +133,7 @@ const AddProduct = () => {
                   placeholder={field.placeholder}
                   background={inputBackground}
                   value={field.value}
+                  disabled={isPending}
                   onChange={(e) =>
                     handleOnChange(
                       field.setter as SetterFunction,
@@ -137,6 +154,7 @@ const AddProduct = () => {
                 id="picture"
                 type="file"
                 background={inputBackground}
+                disabled={isPending}
                 onChange={handleImageChange}
               />
             </div>
@@ -148,6 +166,7 @@ const AddProduct = () => {
               text="Add Product"
               css="bg-yellow-500"
               fontSize="text-xl"
+              disabled={isPending}
             />
           </div>
         </div>

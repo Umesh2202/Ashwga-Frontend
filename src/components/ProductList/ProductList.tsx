@@ -1,4 +1,4 @@
-import { ShopCard } from "@/components/ShopCard";
+import { ShopCard, AddProduct } from "@/components"; // Import Spinner
 import { getRatingsData } from "@/helpers";
 import {
   useGetAllProductsMutation,
@@ -17,17 +17,13 @@ const ProductList = () => {
 
   useEffect(() => {
     const initData = async () => {
-      try {
-        const currentProducts = await getAllProducts();
-        const productData = currentProducts.data;
-        const productIds = productData.map((product: Product) => product.id);
-        const ratings = await getRatingOfProducts({ productIds });
+      const currentProducts = await getAllProducts();
+      const productData = currentProducts.data;
+      const productIds = productData.map((product: Product) => product.id);
+      const ratings = await getRatingOfProducts({ productIds });
 
-        const mergedData = getRatingsData(productData, ratings.data);
-        setProducts(mergedData);
-      } catch (error) {
-        console.error("Error fetching data", error);
-      }
+      const mergedData = getRatingsData(productData, ratings.data);
+      setProducts(mergedData);
     };
 
     initData();
@@ -47,7 +43,15 @@ const ProductList = () => {
     );
   });
 
-  return <ul className="grid grid-cols-4 gap-y-4">{userElements}</ul>;
+  return (
+    <div>
+      <ul className="grid grid-cols-4 gap-y-4">
+        {userElements}
+        <AddProduct />
+      </ul>
+      ;
+    </div>
+  );
 };
 
 export default ProductList;

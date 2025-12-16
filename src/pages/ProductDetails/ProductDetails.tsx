@@ -20,15 +20,25 @@ const ProductDetails = () => {
 
   useEffect(() => {
     const handleProduct = async () => {
-      const product = await getProductByProductId(productId || "");
+      try {
+        const product = await getProductByProductId(productId || "");
 
-      const rating = await getRatingOfProducts({
-        productIds: [Number(productId)],
-      });
+        const rating = await getRatingOfProducts({
+          productIds: [Number(productId)],
+        });
 
-      product.data["rating"] = Number(rating.data[0].averageRating);
-      product.data["ratingsCount"] = Number(rating.data[0].ratingsCount);
-      setProduct(product.data || null);
+        if (rating.data && rating.data.length > 0) {
+          product.data["rating"] = Number(rating.data[0].averageRating);
+          product.data["ratingsCount"] = Number(rating.data[0].ratingsCount);
+        } else {
+          product.data["rating"] = 0;
+          product.data["ratingsCount"] = 0;
+        }
+
+        setProduct(product.data || null);
+      } catch (error) {
+        console.error("Error fetching product details:", error);
+      }
     };
 
     handleProduct();
