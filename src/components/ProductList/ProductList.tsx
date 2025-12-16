@@ -1,4 +1,4 @@
-import { ShopCard, AddProduct, Spinner } from "@/components"; // Import Spinner
+import { ShopCard, AddProduct } from "@/components"; // Import Spinner
 import { getRatingsData } from "@/helpers";
 import {
   useGetAllProductsMutation,
@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 
 const ProductList = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(true); // Add loading state
 
   const { mutateAsync: getAllProducts } = useGetAllProductsMutation();
   const { mutateAsync: getRatingOfProducts } = useGetRatingOfProductsMutation();
@@ -18,20 +17,13 @@ const ProductList = () => {
 
   useEffect(() => {
     const initData = async () => {
-      try {
-        setIsLoading(true); // Start loading
-        const currentProducts = await getAllProducts();
-        const productData = currentProducts.data;
-        const productIds = productData.map((product: Product) => product.id);
-        const ratings = await getRatingOfProducts({ productIds });
+      const currentProducts = await getAllProducts();
+      const productData = currentProducts.data;
+      const productIds = productData.map((product: Product) => product.id);
+      const ratings = await getRatingOfProducts({ productIds });
 
-        const mergedData = getRatingsData(productData, ratings.data);
-        setProducts(mergedData);
-      } catch (error) {
-        console.error("Error fetching data", error);
-      } finally {
-        setIsLoading(false); // Stop loading
-      }
+      const mergedData = getRatingsData(productData, ratings.data);
+      setProducts(mergedData);
     };
 
     initData();
@@ -50,14 +42,6 @@ const ProductList = () => {
       />
     );
   });
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-96">
-        <Spinner />
-      </div>
-    );
-  }
 
   return (
     <div>
