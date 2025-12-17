@@ -13,9 +13,12 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 w-full bg-gray-900">
+    <nav className="sticky top-0 w-full bg-gray-900 z-99">
       <div className="p-3 grid grid-cols-[10%_80%_10%]">
-        <div className="p-2 flex align-center justify-center text-5xl text-amber-50">
+        <div
+          className="p-2 flex align-center justify-center text-5xl text-amber-50 cursor-pointer"
+          onClick={() => navigate("/")}
+        >
           Logo
         </div>
         <div className="p-2 flex justify-center">
