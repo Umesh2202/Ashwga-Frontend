@@ -3,6 +3,7 @@ import { getRatingsData } from "@/helpers";
 import {
   useGetAllProductsMutation,
   useGetRatingOfProductsMutation,
+  useDeleteProductMutation,
 } from "@/services/queries";
 import type { Product } from "@/types";
 import { useEffect, useState } from "react";
@@ -12,6 +13,7 @@ const ProductList = () => {
 
   const { mutateAsync: getAllProducts } = useGetAllProductsMutation();
   const { mutateAsync: getRatingOfProducts } = useGetRatingOfProductsMutation();
+  const { mutateAsync: deleteProduct } = useDeleteProductMutation();
 
   const imagePrefix = "data:image/jpeg;base64,";
 
@@ -29,6 +31,19 @@ const ProductList = () => {
     initData();
   }, [getAllProducts, getRatingOfProducts]);
 
+  const handleDelete = async (id: string) => {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      try {
+        await deleteProduct(id);
+        setProducts((prev) =>
+          prev.filter((product) => product.id.toString() !== id)
+        );
+      } catch (error) {
+        console.error("Error deleting product:", error);
+      }
+    }
+  };
+
   const userElements = products.map((product) => {
     return (
       <ShopCard
@@ -39,6 +54,7 @@ const ProductList = () => {
         rating={product.rating}
         ratingsCount={product.ratingsCount}
         price={product.price}
+        onDelete={handleDelete}
       />
     );
   });

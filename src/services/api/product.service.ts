@@ -19,3 +19,8 @@ export const getProductByProductId = async (productId : string)=>{
   const response = await axios.get(MICROSERVICES.PRODUCT + `/${productId}`);
   return response;
 }
+
+export const deleteProduct = async (productId: string) => {
+  const response = await axios.delete(MICROSERVICES.PRODUCT + `/delete/${productId}`);
+  return response;
+};

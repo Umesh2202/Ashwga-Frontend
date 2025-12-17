@@ -1,5 +1,15 @@
 import { useMutation } from "@tanstack/react-query";
-import { addProduct, getAllProducts, getProductByProductId } from "../api/product.service";
+import { addProduct, deleteProduct, getAllProducts, getProductByProductId } from "../api/product.service";
+
+export const useDeleteProductMutation = () => {
+  return useMutation({
+    mutationKey: ['deleteProduct'],
+    mutationFn: async (productId: string) => {
+      const res = await deleteProduct(productId);
+      return res;
+    },
+  });
+};
 
 export const useAddProductMutation = () => {
   return useMutation({
