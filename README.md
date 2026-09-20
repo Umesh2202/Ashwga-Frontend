@@ -101,7 +101,7 @@ flowchart TD
     UI --> Zustand
     UI --> ReactQuery
     ReactQuery --> Axios
-    Axios -->|/product/all, /product/add, /{id}| ProductMS
+    Axios -->|/product/all, /product/add, /:productId| ProductMS
     Axios -->|/order/add, /order/delete| OrderMS
     Axios -->|/user/, /user/login| UserMS
     Axios -->|/rating/products| RatingMS
